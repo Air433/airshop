@@ -1,6 +1,6 @@
 package com.airshop.item.mapper;
 
-import com.airshop.item.pojo.Categroy;
+import com.airshop.item.pojo.Category;
 import tk.mybatis.mapper.additional.idlist.SelectByIdListMapper;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -9,6 +9,6 @@ import tk.mybatis.mapper.common.Mapper;
  * @Date 2019/6/18 - 22:27
  */
 @org.apache.ibatis.annotations.Mapper
-public interface CategoryMapper extends Mapper<Categroy>, SelectByIdListMapper<CategoryMapper, Long> {
+public interface CategoryMapper extends Mapper<Category>, SelectByIdListMapper<Category, Long> {
 
 }

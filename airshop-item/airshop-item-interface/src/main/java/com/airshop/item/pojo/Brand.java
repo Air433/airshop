@@ -4,20 +4,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 /**
  * @Author ouyanggang
- * @Date 2019/6/16 - 10:15
+ * @Date 2019/7/4 - 16:19
  */
-@Table(name = "tb_category")
-public class Categroy implements Serializable {
+@Table(name = "tb_brand")
+public class Brand {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long parentId;
-    private Boolean isParent;
+    private String image;
+    private Character letter;
 
     public Long getId() {
         return id;
@@ -35,19 +35,19 @@ public class Categroy implements Serializable {
         this.name = name;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public String getImage() {
+        return image;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public Boolean getIsParent() {
-        return isParent;
+    public Character getLetter() {
+        return letter;
     }
 
-    public void setIsParent(Boolean isParent) {
-        this.isParent = isParent;
+    public void setLetter(Character letter) {
+        this.letter = letter;
     }
 }

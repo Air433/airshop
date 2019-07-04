@@ -1,9 +1,9 @@
 package com.airshop.item.service;
 
+import com.airshop.item.pojo.Category;
 import com.airshop.myexception.MyException;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @Author ouyanggang
@@ -16,5 +16,5 @@ public interface CategoryService {
      * @param pid
      * @return
      */
-    List<Locale.Category> queryCategoryByPid(Long pid) throws MyException;
+    List<Category> queryCategoryByPid(Long pid) throws MyException;
 }
