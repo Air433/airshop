@@ -35,4 +35,9 @@ public class CategoryServiceImpl implements CategoryService {
 
         return list;
     }
+
+    @Override
+    public List<Category> queryByBrandId(Long brandId) {
+        return this.categoryMapper.queryByBrandId(brandId);
+    }
 }

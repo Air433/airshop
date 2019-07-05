@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author ouyanggang
@@ -34,5 +32,13 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("bid/{brandId}")
+    public ResponseEntity<List<Category>> queryByBrandId(@PathVariable("brandId") Long brandId){
+        List<Category> list = this.categoryService.queryByBrandId(brandId);
+
+        return Optional.ofNullable(list).filter(x-> !CollectionUtils.isEmpty(x)).map(x-> ResponseEntity.ok(x))
+                .orElseGet(()-> (ResponseEntity<List<Category>>) ResponseEntity.status(HttpStatus.NOT_FOUND));
     }
 }

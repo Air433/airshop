@@ -7,6 +7,7 @@
         <module>air-api-gateway</module>
         <module>airshop-item</module>
         <module>airshop-common</module>
+        <module>air-upload</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

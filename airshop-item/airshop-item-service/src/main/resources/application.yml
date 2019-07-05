@@ -4,7 +4,7 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://localhost:3306/air_shop
+    url: jdbc:mysql://localhost:3306/air_shop?characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
     hikari:

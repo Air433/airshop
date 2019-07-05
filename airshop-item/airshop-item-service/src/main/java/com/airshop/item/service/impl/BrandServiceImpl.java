@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.provider.ExampleProvider;
 
@@ -44,5 +45,15 @@ public class BrandServiceImpl implements BrandService {
         PageInfo<Brand> pageInfo = new PageInfo<>(brandList);
 
         return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
+    }
+
+    @Transactional
+    @Override
+    public void saveBrand(Brand brand, List<Long> cids) {
+        brandMapper.insertSelective(brand);
+
+        for (Long cid : cids) {
+            this.brandMapper.insertCategoryBrand(cid, brand.getId());
+        }
     }
 }
