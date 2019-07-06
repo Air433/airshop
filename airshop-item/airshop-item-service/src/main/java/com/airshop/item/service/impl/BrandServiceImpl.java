@@ -56,4 +56,20 @@ public class BrandServiceImpl implements BrandService {
             this.brandMapper.insertCategoryBrand(cid, brand.getId());
         }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateBrand(Brand brand, List<Long> categories) {
+        deleteByBrandIdInCategoryBrand(brand.getId());
+
+        this.brandMapper.updateByPrimaryKeySelective(brand);
+
+        for (Long categoryId : categories) {
+            this.brandMapper.insertCategoryBrand(categoryId, brand.getId());
+        }
+    }
+
+    private void deleteByBrandIdInCategoryBrand(Long brandId) {
+        this.brandMapper.deleteByBrandIdInCategoryBrand(brandId);
+    }
 }

@@ -28,10 +28,9 @@ public class CategoryController {
             @RequestParam(value = "pid", defaultValue = "0") Long pid){
         List<Category> list = categoryService.queryCategoryByPid(pid);
 
-        if (CollectionUtils.isEmpty(list)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(list);
+        return Optional.ofNullable(list).filter(x->!CollectionUtils.isEmpty(x))
+                .map(x->ResponseEntity.ok(x))
+                .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("bid/{brandId}")

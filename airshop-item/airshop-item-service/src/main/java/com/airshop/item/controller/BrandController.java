@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @Author ouyanggang
@@ -28,10 +29,9 @@ public class BrandController {
 
         PageResult<Brand> result = this.brandService.queryBrandByPage(brandQueryByPageParameter);
 
-        if (Objects.isNull(result)){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(result);
+        return Optional.ofNullable(result).map(x->ResponseEntity.ok(x))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+
     }
 
     /**
@@ -44,5 +44,15 @@ public class BrandController {
     public ResponseEntity<Void> saveBrand(Brand brand, @RequestParam("cids") List<Long> cids){
         this.brandService.saveBrand(brand, cids);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    /**
+     * 更新品牌
+     * @return
+     */
+    @PutMapping
+    public ResponseEntity<Void> updateBrand(Brand brand, @RequestParam("cids")List<Long> categories){
+        this.brandService.updateBrand(brand, categories);
+        return  ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
