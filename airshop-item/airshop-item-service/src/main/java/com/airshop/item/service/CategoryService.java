@@ -19,4 +19,6 @@ public interface CategoryService {
     List<Category> queryCategoryByPid(Long pid) throws MyException;
 
     List<Category> queryByBrandId(Long brandId);
+
+    List<String> queryNameByIds(List<Long> ids);
 }

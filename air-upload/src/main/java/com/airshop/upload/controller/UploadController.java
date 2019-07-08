@@ -29,9 +29,15 @@ public class UploadController {
         String url = this.uploadService.upload(file);
 
         if (StringUtils.isBlank(url)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         return ResponseEntity.ok(url);
+    }
+
+    @PostMapping("test-image")
+    public ResponseEntity<String> testImage(@RequestParam("file") MultipartFile file) throws IOException {
+
+        return new ResponseEntity("http://192.168.13.132:80/group1/M00/00/00/wKgNhF0hvJmAecsJAABigdr8PSA597.png", HttpStatus.OK);
     }
 }

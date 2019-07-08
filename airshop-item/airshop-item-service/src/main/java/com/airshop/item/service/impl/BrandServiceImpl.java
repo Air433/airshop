@@ -69,6 +69,19 @@ public class BrandServiceImpl implements BrandService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteBrand(long id) {
+        this.brandMapper.deleteByPrimaryKey(id);
+
+        this.brandMapper.deleteByBrandIdInCategoryBrand(id);
+    }
+
+    @Override
+    public List<Brand> queryBrandByCategoryId(Long cid) {
+        return this.brandMapper.queryBrandByCategoryId(cid);
+    }
+
     private void deleteByBrandIdInCategoryBrand(Long brandId) {
         this.brandMapper.deleteByBrandIdInCategoryBrand(brandId);
     }

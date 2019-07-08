@@ -18,6 +18,20 @@ public class BrandQueryByPageParameter {
     private Boolean desc = false;
     private String key;
 
+
+    public BrandQueryByPageParameter(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        this.page = page;
+        this.rows = rows;
+        this.sortBy = sortBy;
+        this.desc = desc;
+        this.key = key;
+    }
+
+    public BrandQueryByPageParameter(){
+        super();
+    }
+
+
     public Integer getPage() {
         return page;
     }

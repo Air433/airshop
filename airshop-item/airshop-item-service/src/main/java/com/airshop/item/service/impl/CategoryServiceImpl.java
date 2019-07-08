@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -39,5 +40,18 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> queryByBrandId(Long brandId) {
         return this.categoryMapper.queryByBrandId(brandId);
+    }
+
+    @Override
+    public List<String> queryNameByIds(List<Long> ids) {
+
+        List<String> names = new ArrayList<>();
+        if (names!=null && names.size()>0){
+            for (Long id : ids) {
+                names.add(this.categoryMapper.queryNameById(id));
+            }
+        }
+
+        return null;
     }
 }

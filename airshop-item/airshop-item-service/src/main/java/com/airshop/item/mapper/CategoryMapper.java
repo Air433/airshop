@@ -17,4 +17,7 @@ public interface CategoryMapper extends Mapper<Category>, SelectByIdListMapper<C
 
     @Select("SELECT * FROM tb_category WHERE id IN (SELECT category_id FROM tb_category_brand WHERE brand_id = #{brandId})")
     List<Category> queryByBrandId(@Param("brandId") Long brandId);
+
+    @Select("SELECT name FROM tb_category WHERE id = #{id}")
+    String queryNameById(Long id);
 }

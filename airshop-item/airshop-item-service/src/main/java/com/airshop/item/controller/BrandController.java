@@ -55,4 +55,27 @@ public class BrandController {
         this.brandService.updateBrand(brand, categories);
         return  ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
+
+    @DeleteMapping("bid/{bid}")
+    public ResponseEntity<Void> deleteBrand(@PathVariable("bid") String bid){
+        String separator = "-";
+        if (bid.contains(separator)){
+            String[] ids = bid.split(separator);
+            for (String id : ids) {
+                this.brandService.deleteBrand(Long.parseLong(id));
+            }
+        }else {
+            this.brandService.deleteBrand(Long.parseLong(bid));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandByCategoryId(@PathVariable("cid") Long cid){
+        List<Brand> list = this.brandService.queryBrandByCategoryId(cid);
+
+        return Optional.ofNullable(list).map(x-> ResponseEntity.ok(x))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
 }

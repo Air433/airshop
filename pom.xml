@@ -37,6 +37,7 @@
         <jpa.version>1.0</jpa.version>
     </properties>
 
+
     <dependencyManagement>
         <dependencies>
             <!-- springCloud -->
