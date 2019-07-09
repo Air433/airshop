@@ -27,4 +27,5 @@ fdfs:
     - 192.168.13.132:22122
 
 fastFDS:
-  address: http://192.168.13.132:80/
+#  address: http://192.168.13.132:80/
+  address: http://image.leyou.com/

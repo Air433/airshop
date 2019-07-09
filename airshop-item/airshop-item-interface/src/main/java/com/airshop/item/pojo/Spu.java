@@ -114,4 +114,21 @@ public class Spu {
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+    public Spu(){
+
+    }
+
+    public Spu(Long brandId, Long cid1, Long cid2, Long cid3, String title, String subTitle, Boolean saleable, Boolean valid, Date createTime, Date lastUpdateTime) {
+        this.brandId = brandId;
+        this.cid1 = cid1;
+        this.cid2 = cid2;
+        this.cid3 = cid3;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.saleable = saleable;
+        this.valid = valid;
+        this.createTime = createTime;
+        this.lastUpdateTime = lastUpdateTime;
+    }
 }

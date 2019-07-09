@@ -46,12 +46,12 @@ public class CategoryServiceImpl implements CategoryService {
     public List<String> queryNameByIds(List<Long> ids) {
 
         List<String> names = new ArrayList<>();
-        if (names!=null && names.size()>0){
+        if (ids!=null && ids.size()>0){
             for (Long id : ids) {
                 names.add(this.categoryMapper.queryNameById(id));
             }
         }
 
-        return null;
+        return names;
     }
 }
