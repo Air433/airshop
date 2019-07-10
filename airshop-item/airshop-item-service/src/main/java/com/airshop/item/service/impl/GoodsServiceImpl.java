@@ -156,12 +156,83 @@ public class GoodsServiceImpl implements GoodsService {
         if (spuDetail.getSpecTemplate().equals(oldTemp)){
             updateSkuAndStock(spuBO.getSkus(), spuBO.getId(), true);
         }else {
-
+            updateSkuAndStock(spuBO.getSkus(), spuBO.getId(), false);
         }
+
+        spuDetail.setSpuId(spuBO.getId());
+        this.spuDetailMapper.updateByPrimaryKeySelective(spuDetail);
 
     }
 
     private void updateSkuAndStock(List<Sku> skus, Long spuId, boolean tag) {
+
+        Example example = new Example(Sku.class);
+        example.createCriteria().andEqualTo("spuId", spuId);
+
+        List<Sku> oldList = this.skuMapper.selectByExample(example);
+
+        if (tag){
+
+            skus = skus.stream().filter(Sku::getEnable).collect(Collectors.toList());
+
+            Map<String, Sku> skuMap = skus.stream().collect(Collectors.toMap(Sku::getOwnSpec, sku -> sku));
+
+            List<Sku> removeSkuList
+                    = oldList.stream().filter(oldSku -> !skuMap.containsKey(oldSku.getOwnSpec())).collect(Collectors.toList());
+
+            oldList.removeAll(removeSkuList);
+
+            Map<String, Sku> oldSkuMap = oldList.stream().collect(Collectors.toMap(Sku::getOwnSpec, sku -> sku));
+
+            List<Sku> newSkuList
+                    = skus.stream().filter(sku->!oldSkuMap.containsKey(sku.getOwnSpec())).collect(Collectors.toList());
+
+            skus.removeAll(newSkuList);
+
+            for (Sku sku : removeSkuList) {
+                this.skuMapper.deleteByPrimaryKey(sku.getId());
+                Example stockExample =new Example(Stock.class);
+                stockExample.createCriteria().andEqualTo("skuId", sku.getId());
+                this.stockMapper.deleteByExample(stockExample);
+            }
+
+            saveSkuAndStock(newSkuList, spuId);
+
+            for (Sku sku : oldList) {
+                Sku updateSkuInfo = skuMap.get(sku.getOwnSpec());
+
+                sku.setLastUpdateTime(new Date());
+
+                Long price = Optional.ofNullable(updateSkuInfo.getPrice()).orElse(0L);
+                sku.setPrice(price);
+                Long stockQty = Optional.ofNullable(updateSkuInfo.getStock()).orElse(0L);
+                sku.setStock(stockQty);
+
+                sku.setTitle(updateSkuInfo.getTitle());
+                sku.setImages(updateSkuInfo.getImages());
+
+                this.skuMapper.updateByPrimaryKey(sku);
+
+                Stock stock = new Stock();
+                stock.setSkuId(sku.getId());
+                stock.setStock(sku.getStock());
+                this.stockMapper.updateByPrimaryKeySelective(stock);
+
+            }
+
+        }else {
+            List<Long> skuIds = oldList.stream().map(Sku::getId).collect(Collectors.toList());
+
+            Example stockExample = new Example(Stock.class);
+            stockExample.createCriteria().andIn("skuId", skuIds);
+            this.stockMapper.deleteByExample(stockExample);
+
+            Example skuExample = new Example(Sku.class);
+            skuExample.createCriteria().andEqualTo("spuId", spuId);
+            this.skuMapper.deleteByExample(skuExample);
+
+            saveSkuAndStock(skus, spuId);
+        }
 
     }
 
