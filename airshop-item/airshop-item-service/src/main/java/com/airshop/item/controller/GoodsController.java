@@ -52,8 +52,8 @@ public class GoodsController extends BaseController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @GetMapping("sku/list")
-    public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("id")Long id){
+    @GetMapping("sku/list/{id}")
+    public ResponseEntity<List<Sku>> querySkuBySpuId(@PathVariable("id")Long id){
         List<Sku> skus = this.goodsService.querySkuBySpuId(id);
 
         if (skus == null || skus.size()==0){

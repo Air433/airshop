@@ -27,7 +27,6 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private BrandMapper brandMapper;
 
-
     @Override
     public PageResult<Brand> queryBrandByPage(BrandQueryByPageParameter pageParameter) {
         PageHelper.startPage(pageParameter.getPage(), pageParameter.getRows());
@@ -80,6 +79,11 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public List<Brand> queryBrandByCategoryId(Long cid) {
         return this.brandMapper.queryBrandByCategoryId(cid);
+    }
+
+    @Override
+    public List<Brand> queryBrandByIds(List<Long> ids) {
+        return this.brandMapper.selectByIdList(ids);
     }
 
     private void deleteByBrandIdInCategoryBrand(Long brandId) {

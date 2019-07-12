@@ -38,6 +38,16 @@ public class CategoryController {
         List<Category> list = this.categoryService.queryByBrandId(brandId);
 
         return Optional.ofNullable(list).filter(x-> !CollectionUtils.isEmpty(x)).map(x-> ResponseEntity.ok(x))
-                .orElseGet(()-> (ResponseEntity<List<Category>>) ResponseEntity.status(HttpStatus.NOT_FOUND));
+                .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * 根据商品分类id查询名称
+     * @return
+     */
+    @GetMapping("names")
+    public ResponseEntity<List<String>> queryNameByIds(@RequestParam List<Long> ids){
+        List<String> list = this.categoryService.queryNameByIds(ids);
+        return ResponseEntity.ok(list);
     }
 }

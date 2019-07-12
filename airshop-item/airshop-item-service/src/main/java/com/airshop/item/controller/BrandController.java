@@ -78,4 +78,10 @@ public class BrandController {
         return Optional.ofNullable(list).map(x-> ResponseEntity.ok(x))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @GetMapping("list")
+    public ResponseEntity<List<Brand>> queryBrandByIds(@RequestParam("ids") List<Long> ids){
+        List<Brand> brands = this.brandService.queryBrandByIds(ids);
+        return ResponseEntity.ok(brands);
+    }
 }
