@@ -1,7 +1,9 @@
 package com.airshop.service;
 
+import com.airshop.bo.SearchRO;
 import com.airshop.item.pojo.Spu;
 import com.airshop.pojo.Goods;
+import com.airshop.vo.SearchResult;
 
 import java.io.IOException;
 
@@ -12,4 +14,6 @@ import java.io.IOException;
 public interface SearchService {
 
     Goods buildGoods(Spu spu) throws IOException;
+
+    SearchResult search(SearchRO searchRO);
 }

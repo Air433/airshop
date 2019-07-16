@@ -18,6 +18,7 @@ zuul:
   retryable: true
   routes:
     item-service: /item/** # 将商品微服务映射到/item/**
+    search-service: /search/**
 #    upload-service: /file/**
   ignored-services:
     - upload-service # 忽略upload-service服务

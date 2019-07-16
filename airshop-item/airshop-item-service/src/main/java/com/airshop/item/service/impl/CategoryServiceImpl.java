@@ -54,4 +54,21 @@ public class CategoryServiceImpl implements CategoryService {
 
         return names;
     }
+
+    @Override
+    public List<Category> queryAllCategoryLevelByCid(Long id) {
+        List<Category> categoryList = new ArrayList<>();
+        Category category = this.categoryMapper.selectByPrimaryKey(id);
+        while (category.getParentId()!=0){
+            categoryList.add(category);
+            category = this.categoryMapper.selectByPrimaryKey(category.getParentId());
+        }
+        categoryList.add(category);
+        return categoryList;
+    }
+
+    @Override
+    public List<Category> queryCategoryByIds(List<Long> ids) {
+        return categoryMapper.selectByIdList(ids);
+    }
 }

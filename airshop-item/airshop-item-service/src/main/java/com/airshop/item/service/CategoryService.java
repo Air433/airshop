@@ -21,4 +21,8 @@ public interface CategoryService {
     List<Category> queryByBrandId(Long brandId);
 
     List<String> queryNameByIds(List<Long> ids);
+
+    List<Category> queryAllCategoryLevelByCid(Long id);
+
+    List<Category> queryCategoryByIds(List<Long> ids);
 }

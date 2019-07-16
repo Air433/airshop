@@ -30,9 +30,15 @@ public class GoodsController extends BaseController {
 
     @GetMapping("/spu/page")
     public ResponseEntity<PageResult<SpuBO>> querySpuByPage(
-            SpuQueryByPageParameter parameter){
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "false") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "saleable",defaultValue = "true") Boolean saleable){
 
-        PageResult<SpuBO> result = this.goodsService.querySpuByPageAndSort(parameter);
+        SpuQueryByPageParameter spuQueryByPageParameter = new SpuQueryByPageParameter(page,rows,sortBy,desc,key,saleable);
+        PageResult<SpuBO> result = this.goodsService.querySpuByPageAndSort(spuQueryByPageParameter);
 
         log.warn("查询数据量：{}", result.getTotal());
         return ResponseEntity.ok(result);
@@ -48,8 +54,7 @@ public class GoodsController extends BaseController {
     public ResponseEntity<SpuDetail> querySpuDetailById(@PathVariable("id")Long id){
         SpuDetail spuDetail = this.goodsService.querySpuDetailById(id);
 
-        return Optional.ofNullable(spuDetail).map(x->ResponseEntity.ok(x))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return ResponseEntity.ok(spuDetail);
     }
 
     @GetMapping("sku/list/{id}")

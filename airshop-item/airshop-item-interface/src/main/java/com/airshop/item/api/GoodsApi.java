@@ -25,7 +25,12 @@ public interface GoodsApi {
      */
     @GetMapping("/spu/page")
     PageResult<SpuBO> querySpuByPage(
-            SpuQueryByPageParameter parameter);
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "false") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "saleable",defaultValue = "true") Boolean saleable);
     /**
      * 根据spu商品id查询详情
      * @param id

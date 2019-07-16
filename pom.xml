@@ -36,6 +36,7 @@
         <air.latest.version>0.0.1-SNAPSHOT</air.latest.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
         <jpa.version>1.0</jpa.version>
+        <fastJson.version>1.2.56</fastJson.version>
     </properties>
 
 
@@ -84,6 +85,12 @@
                 <groupId>javax.persistence</groupId>
                 <artifactId>persistence-api</artifactId>
                 <version>${jpa.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastJson.version}</version>
             </dependency>
 
         </dependencies>

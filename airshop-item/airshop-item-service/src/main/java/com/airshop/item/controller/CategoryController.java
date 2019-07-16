@@ -50,4 +50,16 @@ public class CategoryController {
         List<String> list = this.categoryService.queryNameByIds(ids);
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("all/level/{cid3}")
+    public ResponseEntity<List<Category>> queryAllCategoryLevelByCid3(@PathVariable("cid3") Long id){
+        List<Category> list = categoryService.queryAllCategoryLevelByCid(id);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<List<Category>> queryAllCategoryByIds(@RequestParam("ids")List<Long> ids){
+        List<Category> list = categoryService.queryCategoryByIds(ids);
+        return ResponseEntity.ok(list);
+    }
 }
