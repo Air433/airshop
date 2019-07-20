@@ -70,9 +70,7 @@ public class GoodsController extends BaseController {
     @GetMapping("/spu/{id}")
     public ResponseEntity<SpuBO> queryGoodsById(@PathVariable("id")Long id){
         SpuBO spuBO = this.goodsService.queryGoodsById(id);
-
-        return Optional.ofNullable(spuBO).map(x-> ResponseEntity.ok(x))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return ResponseEntity.ok(spuBO);
     }
 
     @PutMapping

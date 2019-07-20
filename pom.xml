@@ -9,6 +9,7 @@
         <module>airshop-common</module>
         <module>air-upload</module>
         <module>airshop-search</module>
+        <module>air-shopgoods-web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,11 +1,10 @@
 package com.airshop.service.impl;
 
 import com.airshop.bo.SearchRO;
-import com.airshop.client.BrandClient;
-import com.airshop.client.CategoryClient;
-import com.airshop.client.GoodsClient;
-import com.airshop.client.SpecClient;
-import com.airshop.common.pojo.PageResult;
+import com.airshop.item.client.BrandClient;
+import com.airshop.item.client.CategoryClient;
+import com.airshop.item.client.GoodsClient;
+import com.airshop.item.client.SpecClient;
 import com.airshop.item.pojo.*;
 import com.airshop.pojo.Goods;
 import com.airshop.repository.GoodsRepository;

@@ -1,0 +1,17 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: goods-page
+  thymeleaf:
+    cache: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 50
+    lease-expiration-duration-in-seconds: 100
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}.${server.port}
