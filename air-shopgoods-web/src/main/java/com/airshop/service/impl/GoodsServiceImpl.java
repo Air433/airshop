@@ -10,11 +10,9 @@ import com.airshop.item.pojo.Sku;
 import com.airshop.item.pojo.SpuDetail;
 import com.airshop.service.GoodsService;
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 

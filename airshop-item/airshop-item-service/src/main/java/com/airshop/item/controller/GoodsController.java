@@ -61,9 +61,6 @@ public class GoodsController extends BaseController {
     public ResponseEntity<List<Sku>> querySkuBySpuId(@PathVariable("id")Long id){
         List<Sku> skus = this.goodsService.querySkuBySpuId(id);
 
-        if (skus == null || skus.size()==0){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return ResponseEntity.ok(skus);
     }
 
@@ -77,5 +74,19 @@ public class GoodsController extends BaseController {
     public ResponseEntity<Void> updateGoods(@RequestBody SpuBO spuBO){
         this.goodsService.updateGoods(spuBO);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @DeleteMapping("/spu/{id}")
+    public ResponseEntity<Void> deleteGoods(@PathVariable("id") String ids){
+        String separator = "-";
+        if (ids.contains(separator)){
+            String[] goodsIds = ids.split(separator);
+            for (String goodsId : goodsIds) {
+                this.goodsService.deleteGoods(Long.parseLong(goodsId));
+            }
+        }else {
+            this.goodsService.deleteGoods(Long.parseLong(ids));
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

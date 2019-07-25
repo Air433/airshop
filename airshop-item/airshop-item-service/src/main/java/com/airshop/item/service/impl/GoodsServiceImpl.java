@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,8 @@ public class GoodsServiceImpl implements GoodsService {
     private SkuMapper skuMapper;
     @Resource
     private StockMapper stockMapper;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public PageResult<SpuBO> querySpuByPageAndSort(SpuQueryByPageParameter pageParameter) {
@@ -98,6 +101,7 @@ public class GoodsServiceImpl implements GoodsService {
 
         saveSkuAndStock(spuBO.getSkus(), spuBO.getId());
 
+        sendMessage(spuBO.getId(), "insert");
     }
 
     @Override
@@ -162,6 +166,31 @@ public class GoodsServiceImpl implements GoodsService {
         spuDetail.setSpuId(spuBO.getId());
         this.spuDetailMapper.updateByPrimaryKeySelective(spuDetail);
 
+        this.sendMessage(spuBO.getId(), "update");
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteGoods(long spuId) {
+
+        this.spuMapper.deleteByPrimaryKey(spuId);
+
+        Example example = new Example(SpuDetail.class);
+        example.createCriteria().andEqualTo("spuId", spuId);
+        this.spuDetailMapper.deleteByExample(example);
+
+        Example skuExample = new Example(Sku.class);
+        skuExample.createCriteria().andEqualTo("spuId", spuId);
+        this.skuMapper.deleteByExample(skuExample);
+
+        List<Sku> skuList = this.skuMapper.selectByExample(skuExample);
+
+        skuList.forEach(sku-> {
+            this.stockMapper.deleteByPrimaryKey(sku.getId());
+        });
+
+        this.sendMessage(spuId, "delete");
     }
 
     private void updateSkuAndStock(List<Sku> skus, Long spuId, boolean tag) {
@@ -250,6 +279,14 @@ public class GoodsServiceImpl implements GoodsService {
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
             this.stockMapper.insert(stock);
+        }
+    }
+
+    private void sendMessage(Long id, String type){
+        try {
+            this.amqpTemplate.convertAndSend("item." + type, id);
+        }catch (Exception e){
+            log.error("{}商品消息发送异常，商品id：{}", type, id, e);
         }
     }
 }

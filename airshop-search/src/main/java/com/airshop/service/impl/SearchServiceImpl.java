@@ -1,6 +1,7 @@
 package com.airshop.service.impl;
 
 import com.airshop.bo.SearchRO;
+import com.airshop.item.bo.SpuBO;
 import com.airshop.item.client.BrandClient;
 import com.airshop.item.client.CategoryClient;
 import com.airshop.item.client.GoodsClient;
@@ -171,6 +172,19 @@ public class SearchServiceImpl implements SearchService {
         }
 
         return new SearchResult(pageInfo.getTotalElements(), (long)pageInfo.getTotalPages(), pageInfo.getContent(), categories, brandList, specs);
+    }
+
+    @Override
+    public void createIndex(Long spuId) throws IOException {
+        SpuBO spuBO = this.goodsClient.querySpuById(spuId);
+        Goods goods = this.buildGoods(spuBO);
+
+        this.goodsRepository.save(goods);
+    }
+
+    @Override
+    public void deleteIndex(Long spuId) {
+        this.goodsRepository.deleteById(spuId);
     }
 
     private List<Map<String, Object>> getSpec(Long id, QueryBuilder basicQuery) {

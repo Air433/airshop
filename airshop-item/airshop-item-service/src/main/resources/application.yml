@@ -10,6 +10,14 @@ spring:
     hikari:
       maximum-pool-size: 30
       minimum-idle: 10
+  rabbitmq:
+    host: 192.168.13.132
+    username: admin
+    password: admin
+#    virtual-host: /airshop
+    template:
+      exchange: airshop.item.exchange
+    publisher-returns: true
 eureka:
   client:
     service-url:

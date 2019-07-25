@@ -7,6 +7,10 @@ spring:
     elasticsearch:
       cluster-name: elasticsearch
       cluster-nodes: 192.168.13.132:9300
+  rabbitmq:
+    host: 192.168.13.132
+    username: admin
+    password: admin
 eureka:
   client:
     service-url:
