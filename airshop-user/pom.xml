@@ -9,20 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.airshop.common</groupId>
-    <artifactId>air-common</artifactId>
+    <groupId>com.airshop.user</groupId>
+    <artifactId>airshop-user</artifactId>
+    <packaging>pom</packaging>
+    <modules>
 
+        <module>airshop-user-interface</module>
+        <module>airshop-user-service</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-    </dependencies>
 </project>

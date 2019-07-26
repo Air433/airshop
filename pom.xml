@@ -10,6 +10,7 @@
         <module>air-upload</module>
         <module>airshop-search</module>
         <module>air-shopgoods-web</module>
+        <module>airshop-user</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
