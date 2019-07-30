@@ -9,13 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.airshop.item</groupId>
-    <artifactId>airshop-item</artifactId>
+    <groupId>com.airshop.auth</groupId>
+    <artifactId>airshop-auth</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>airshop-item-interface</module>
-        <module>airshop-item-service</module>
+        <module>airshop-auth-common</module>
+        <module>airshop-auth-service</module>
     </modules>
+
+
     <packaging>pom</packaging>
 
 

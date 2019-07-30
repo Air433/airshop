@@ -1,21 +1,20 @@
-package com.airshop.user;
+package com.airshop.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @Author ouyanggang
- * @Date 2019/7/26 - 16:16
+ * @Date 2019/7/29 - 11:57
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("com.airshop.user.mapper")
-public class AirUserService {
+@EnableFeignClients(basePackages = "com.airshop")
+public class AirshopAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AirUserService.class, args);
+        SpringApplication.run(AirshopAuthApplication.class, args);
     }
 }

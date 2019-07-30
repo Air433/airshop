@@ -11,6 +11,7 @@
         <module>airshop-search</module>
         <module>air-shopgoods-web</module>
         <module>airshop-user</module>
+        <module>airshop-auth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -39,6 +40,7 @@
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
         <jpa.version>1.0</jpa.version>
         <fastJson.version>1.2.56</fastJson.version>
+        <jwt.version>0.9.1</jwt.version>
     </properties>
 
 
@@ -93,6 +95,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastJson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
 
         </dependencies>

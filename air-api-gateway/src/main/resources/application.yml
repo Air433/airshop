@@ -20,9 +20,12 @@ zuul:
     item-service: /item/** # 将商品微服务映射到/item/**
     search-service: /search/**
     user-service: /user/**
+    auth-service: /auth/**
 #    upload-service: /file/**
   ignored-services:
     - upload-service # 忽略upload-service服务
+  add-host-header: true
+  sensitive-headers:
 
 ribbon:
   ConnectTimeout: 250 # 连接超时时间(ms)
@@ -38,3 +41,16 @@ hystrix:
         isolation:
           thread:
             timeoutInMillisecond: 10000 # 熔断超时时长：10000ms
+
+airshop:
+  jwt:
+    pubKeyPath: D:\\server\\airshop\\rsa.pub
+    cookieName: AIR_TOKE
+  filter:
+    allowPaths:
+      /api/auth
+      /api/search
+      /api/user/register
+      /api/user/check
+      /api/user/code
+      /api/item
