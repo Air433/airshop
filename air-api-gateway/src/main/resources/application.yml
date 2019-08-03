@@ -21,6 +21,7 @@ zuul:
     search-service: /search/**
     user-service: /user/**
     auth-service: /auth/**
+    cart-service: /cart/**
 #    upload-service: /file/**
   ignored-services:
     - upload-service # 忽略upload-service服务
@@ -45,7 +46,7 @@ hystrix:
 airshop:
   jwt:
     pubKeyPath: D:\\server\\airshop\\rsa.pub
-    cookieName: AIR_TOKE
+    cookieName: AIR_TOKEN
   filter:
     allowPaths:
       /api/auth

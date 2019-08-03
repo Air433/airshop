@@ -19,6 +19,6 @@ airshop:
     secret: airshop@Love(Auth^33) # 登录校验的密钥
     pubKeyPath: D:\\server\\airshop\\rsa.pub
     priKeyPath: D:\\server\\airshop\\rsa.pri
-    expire: 30 # 过期时间,单位分钟
+    expire: 1800 # 过期时间,单位分钟
     cookieName: AIR_TOKEN
-    cookieMaxAge: 30
+    cookieMaxAge: 1800

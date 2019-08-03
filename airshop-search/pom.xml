@@ -36,7 +36,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.airshop.item.interface</groupId>
+            <groupId>com.airshop.item</groupId>
             <artifactId>airshop-item-interface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

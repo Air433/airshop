@@ -12,6 +12,7 @@
         <module>air-shopgoods-web</module>
         <module>airshop-user</module>
         <module>airshop-auth</module>
+        <module>airshop-cart</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -64,6 +64,11 @@ public class GoodsController extends BaseController {
         return ResponseEntity.ok(skus);
     }
 
+    @GetMapping("sku/list/ids")
+    public ResponseEntity<List<Sku>> querySkusBySkuIds(@RequestParam("ids") List<Long> ids){
+        return ResponseEntity.ok(goodsService.querySkuByIds(ids));
+    }
+
     @GetMapping("/spu/{id}")
     public ResponseEntity<SpuBO> queryGoodsById(@PathVariable("id")Long id){
         SpuBO spuBO = this.goodsService.queryGoodsById(id);
@@ -89,4 +94,11 @@ public class GoodsController extends BaseController {
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/sku/{id}")
+    public ResponseEntity<Sku> querySkuById(@PathVariable("id") Long id){
+        Sku sku = this.goodsService.querySkuById(id);
+        return ResponseEntity.ok(sku);
+    }
+
 }

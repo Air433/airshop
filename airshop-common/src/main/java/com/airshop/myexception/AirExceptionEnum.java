@@ -15,4 +15,10 @@ public enum AirExceptionEnum {
      * 品牌信息无法找到
      */
     BRAND_NOT_FOUND,
+
+    GOODS_SKU_NOT_FOUND,
+
+    GOODS_STOCK_NOT_FOUND,
+
+    CART_NOT_FOUND;
 }

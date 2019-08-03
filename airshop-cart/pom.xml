@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.airshop.goods</groupId>
-    <artifactId>airshop-goods-web</artifactId>
+    <groupId>com.airshop.parent</groupId>
+    <artifactId>airshop-cart</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
@@ -28,21 +28,28 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.airshop.item</groupId>
-            <artifactId>airshop-item-interface</artifactId>
+            <groupId>com.airshop.auth</groupId>
+            <artifactId>airshop-auth-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>com.airshop.common</groupId>
+            <artifactId>air-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.airshop.item</groupId>
+            <artifactId>airshop-item-interface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

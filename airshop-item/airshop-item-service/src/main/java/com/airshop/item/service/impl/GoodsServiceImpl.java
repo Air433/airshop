@@ -6,6 +6,8 @@ import com.airshop.item.mapper.*;
 import com.airshop.item.pojo.*;
 import com.airshop.item.service.CategoryService;
 import com.airshop.item.service.GoodsService;
+import com.airshop.myexception.AirExceptionEnum;
+import com.airshop.myexception.MyException;
 import com.airshop.parameter.pojo.SpuQueryByPageParameter;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -17,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -191,6 +194,32 @@ public class GoodsServiceImpl implements GoodsService {
         });
 
         this.sendMessage(spuId, "delete");
+    }
+
+    @Override
+    public List<Sku> querySkuByIds(List<Long> skuIds) {
+        List<Sku> skus = skuMapper.selectByIdList(skuIds);
+        if (CollectionUtils.isEmpty(skuIds)){
+            throw new MyException(AirExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+        loadStockInSku(skuIds, skus);
+        return skus;
+    }
+
+    @Override
+    public Sku querySkuById(Long id) {
+        return this.skuMapper.selectByPrimaryKey(id);
+    }
+
+    private void loadStockInSku(List<Long> skuIds, List<Sku> skus) {
+        List<Stock> stockList = stockMapper.selectByIdList(skuIds);
+        if (CollectionUtils.isEmpty(stockList)){
+            throw new MyException(AirExceptionEnum.GOODS_STOCK_NOT_FOUND);
+        }
+
+        Map<Long, Long> stockMap = stockList.stream().collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
+
+        skus.forEach(s-> s.setStock(stockMap.get(s.getId())));
     }
 
     private void updateSkuAndStock(List<Sku> skus, Long spuId, boolean tag) {
