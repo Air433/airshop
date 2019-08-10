@@ -2,6 +2,7 @@ package com.airshop.item.service.impl;
 
 import com.airshop.common.pojo.PageResult;
 import com.airshop.item.bo.SpuBO;
+import com.airshop.item.dto.CartDTO;
 import com.airshop.item.mapper.*;
 import com.airshop.item.pojo.*;
 import com.airshop.item.service.CategoryService;
@@ -209,6 +210,17 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Sku querySkuById(Long id) {
         return this.skuMapper.selectByPrimaryKey(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void decreaseStock(List<CartDTO> cartDTOS) {
+        for (CartDTO cartDTO : cartDTOS) {
+            int count = stockMapper.decreaseStock(cartDTO.getSkuId(), cartDTO.getNum());
+            if (count!=1){
+                throw new MyException(AirExceptionEnum.STOCK_NOT_FOUND);
+            }
+        }
     }
 
     private void loadStockInSku(List<Long> skuIds, List<Sku> skus) {

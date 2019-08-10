@@ -2,14 +2,13 @@ package com.airshop.item.api;
 
 import com.airshop.common.pojo.PageResult;
 import com.airshop.item.bo.SpuBO;
+import com.airshop.item.dto.CartDTO;
 import com.airshop.item.pojo.Sku;
 import com.airshop.item.pojo.Spu;
 import com.airshop.item.pojo.SpuDetail;
 import com.airshop.parameter.pojo.SpuQueryByPageParameter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -63,4 +62,10 @@ public interface GoodsApi {
      */
     @GetMapping("/sku/{id}")
     Sku querySkuById(@PathVariable("id")Long id);
+
+    @GetMapping("sku/list/ids")
+    ResponseEntity<List<Sku>> querySkusBySkuIds(@RequestParam("ids") List<Long> ids);
+
+    @PostMapping("stock/decrease")
+    void decreaseStock(@RequestBody List<CartDTO> cartDTOS);
 }

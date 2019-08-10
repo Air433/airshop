@@ -1,10 +1,10 @@
-package com.airshop.config;
+package com.airshop.properties;
 
 import com.airshop.auth.utils.RsaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
@@ -13,22 +13,20 @@ import java.security.PublicKey;
 
 /**
  * @Author ouyanggang
- * @Date 2019/7/30 - 15:43
+ * @Date 2019/8/1 - 09:57
  */
-//@ConfigurationProperties(prefix = "airshop.jwt")
 @Component
+@ConfigurationProperties(prefix = "airshop.jwt")
 @RefreshScope
-public class JwtProperties {
+public class JwtProp {
+
+    private String pubKeyPath;
 
     private PublicKey publicKey;
 
-    @Value("${airshop.jwt.pubKeyPath}")
-    private String pubKeyPath;
-
-    @Value("${airshop.jwt.cookieName}")
     private String cookieName;
 
-    private static final Logger log = LoggerFactory.getLogger(JwtProperties.class);
+    private static final Logger log = LoggerFactory.getLogger(JwtProp.class);
 
     @PostConstruct
     public void init(){
@@ -40,20 +38,20 @@ public class JwtProperties {
         }
     }
 
-    public PublicKey getPublicKey() {
-        return publicKey;
-    }
-
-    public void setPublicKey(PublicKey publicKey) {
-        this.publicKey = publicKey;
-    }
-
     public String getPubKeyPath() {
         return pubKeyPath;
     }
 
     public void setPubKeyPath(String pubKeyPath) {
         this.pubKeyPath = pubKeyPath;
+    }
+
+    public PublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(PublicKey publicKey) {
+        this.publicKey = publicKey;
     }
 
     public String getCookieName() {

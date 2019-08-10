@@ -19,3 +19,6 @@ airshop:
   jwt:
     pubKeyPath: D:\\server\\airshop\\rsa.pub
     cookieName: AIR_TOKEN
+  idworker:
+    workerId: 2
+    dataCenterId: 2

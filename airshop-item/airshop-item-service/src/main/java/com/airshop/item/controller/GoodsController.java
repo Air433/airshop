@@ -3,6 +3,7 @@ package com.airshop.item.controller;
 import com.airshop.common.pojo.PageResult;
 import com.airshop.controller.BaseController;
 import com.airshop.item.bo.SpuBO;
+import com.airshop.item.dto.CartDTO;
 import com.airshop.item.pojo.Sku;
 import com.airshop.item.pojo.Spu;
 import com.airshop.item.pojo.SpuDetail;
@@ -99,6 +100,11 @@ public class GoodsController extends BaseController {
     public ResponseEntity<Sku> querySkuById(@PathVariable("id") Long id){
         Sku sku = this.goodsService.querySkuById(id);
         return ResponseEntity.ok(sku);
+    }
+
+    @PostMapping("stock/decrease")
+    public void decreaseStock(@RequestBody List<CartDTO> cartDTOS){
+        goodsService.decreaseStock(cartDTOS);
     }
 
 }

@@ -13,6 +13,7 @@
         <module>airshop-user</module>
         <module>airshop-auth</module>
         <module>airshop-cart</module>
+        <module>airshop-order</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -42,6 +43,7 @@
         <jpa.version>1.0</jpa.version>
         <fastJson.version>1.2.56</fastJson.version>
         <jwt.version>0.9.1</jwt.version>
+        <wxPay.version>0.0.3</wxPay.version>
     </properties>
 
 
@@ -102,6 +104,12 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>wxpay-sdk</artifactId>
+                <version>${wxPay.version}</version>
             </dependency>
 
         </dependencies>

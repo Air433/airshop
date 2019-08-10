@@ -15,3 +15,8 @@ eureka:
     prefer-ip-address: true
     ip-address: 127.0.0.1
     instance-id: ${spring.application.name}.${server.port}
+
+airshop:
+  jwt:
+    pubKeyPath: D:\\server\\airshop\\rsa.pub
+    cookieName: AIR_TOKEN

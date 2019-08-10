@@ -1,0 +1,41 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/air_shop?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 10
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 50 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 100 # 10秒不发送就过期
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+
+airshop:
+  idworker:
+    workerId: 1
+    dataCenterId: 1
+  jwt:
+    secret: airshop@Love(Auth^33) # 登录校验的密钥
+    pubKeyPath: D:\\server\\airshop\\rsa.pub
+    priKeyPath: D:\\server\\airshop\\rsa.pri
+    expire: 1800 # 过期时间,单位分钟
+    cookieName: AIR_TOKEN
+    cookieMaxAge: 1800
+  pay:
+    appId: wx8397f8696b538317
+    mchId: 1473426802
+    key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+    httpConnectTimeoutMs: 5000
+    httpReadTimeoutMs: 10000
+    notifyUrl: http://h7rmfa.natappfree.cc/wxpay/notify
