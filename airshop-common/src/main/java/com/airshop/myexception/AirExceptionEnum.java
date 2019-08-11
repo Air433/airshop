@@ -34,5 +34,7 @@ public enum AirExceptionEnum {
 
     CREATE_PAY_URL_ERROR,
 
-    WX_PAY_SIGN_INVALID;
+    WX_PAY_SIGN_INVALID,
+
+    WX_PAY_NOTIFY_PARAM_ERROR;
 }

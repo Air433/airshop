@@ -7,4 +7,5 @@ package com.airshop.order.service;
 public interface PayLogService {
 
     void createPayLog(Long orderId, Long actualPay);
+
 }

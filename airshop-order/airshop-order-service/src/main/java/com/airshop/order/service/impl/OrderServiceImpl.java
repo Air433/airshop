@@ -1,6 +1,7 @@
 package com.airshop.order.service.impl;
 
 import com.airshop.auth.entity.UserInfo;
+import com.airshop.common.pojo.PageResult;
 import com.airshop.interceptor.LoginInterceptor;
 import com.airshop.item.client.GoodsClient;
 import com.airshop.item.dto.CartDTO;
@@ -11,6 +12,7 @@ import com.airshop.order.client.AddressClient;
 import com.airshop.order.dto.AddressDTO;
 import com.airshop.order.dto.OrderDTO;
 import com.airshop.order.dto.OrderStatusEnum;
+import com.airshop.order.dto.PayStateEnum;
 import com.airshop.order.mapper.OrderDetailMapper;
 import com.airshop.order.mapper.OrderMapper;
 import com.airshop.order.mapper.OrderStatusMapper;
@@ -21,6 +23,8 @@ import com.airshop.order.service.OrderService;
 import com.airshop.order.service.PayLogService;
 import com.airshop.order.utils.PayHelper;
 import com.airshop.utils.IdWorker;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -173,6 +178,57 @@ public class OrderServiceImpl implements OrderService {
         payLogService.createPayLog(orderId, order.getActualPay());
 
         return url;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void handleNotify(Map<String, String> msg) {
+        payHelper.handleNotify(msg);
+    }
+
+    @Override
+    public PayStateEnum queryOrderStateByOrderId(Long orderId) {
+        OrderStatus orderStatus = orderStatusMapper.selectByPrimaryKey(orderId);
+
+        Integer status = orderStatus.getStatus();
+
+        if (!status.equals(OrderStatusEnum.INIT.value())){
+            return PayStateEnum.SUCCESS;
+        }
+
+        return payHelper.queryPageState(orderId);
+    }
+
+    @Override
+    public PageResult<Order> queryOrderByPage(Integer page, Integer rows) {
+        PageHelper.startPage(page, rows);
+
+        Example example = new Example(Order.class);
+
+        List<Order> orders = orderMapper.selectByExample(example);
+
+        Example detailExample = new Example(OrderDetail.class);
+
+        List<Long> orderIds = orders.stream().map(Order::getOrderId).collect(Collectors.toList());
+
+        detailExample.createCriteria().andIn("orderId", orderIds);
+
+        List<OrderDetail> orderDetailList = orderDetailMapper.selectByExample(detailExample);
+
+        Map<Long, List<OrderDetail>> orderDetailMap = orderDetailList.stream().collect(Collectors.groupingBy(OrderDetail::getOrderId));
+
+        List<OrderStatus> orderStatusList = orderStatusMapper.selectByIdList(orderIds);
+
+        Map<Long, OrderStatus> orderStatusMap = orderStatusList.stream().collect(Collectors.toMap(OrderStatus::getOrderId, Function.identity()));
+
+        for (Order order : orders) {
+            order.setOrderDetails(orderDetailMap.get(order.getOrderId()));
+            order.setOrderStatus(orderStatusMap.get(order.getOrderId()));
+        }
+
+        PageInfo<Order> pageInfo = new PageInfo<>(orders);
+
+        return new PageResult<Order>(pageInfo.getTotal(), Long.valueOf(pageInfo.getPages()), pageInfo.getList());
     }
 
 

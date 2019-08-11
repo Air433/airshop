@@ -38,4 +38,4 @@ airshop:
     key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
     httpConnectTimeoutMs: 5000
     httpReadTimeoutMs: 10000
-    notifyUrl: http://h7rmfa.natappfree.cc/wxpay/notify
+    notifyUrl: http://airshopnotify.vaiwan.com/wxpay/notify

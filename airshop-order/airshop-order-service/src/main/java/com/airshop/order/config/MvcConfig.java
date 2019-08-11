@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Author ouyanggang
  * @Date 2019/8/1 - 10:59
  */
-@Configuration
+//@Configuration
 @EnableConfigurationProperties(value = JwtProp.class)
 public class MvcConfig implements WebMvcConfigurer {
 
@@ -27,6 +27,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/**").excludePathPatterns("/wxpay/**");
     }
 }
