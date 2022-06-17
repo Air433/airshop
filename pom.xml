@@ -41,7 +41,7 @@
         <air.latest.version>0.0.1-SNAPSHOT</air.latest.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
         <jpa.version>1.0</jpa.version>
-        <fastJson.version>1.2.56</fastJson.version>
+        <fastJson.version>1.2.83</fastJson.version>
         <jwt.version>0.9.1</jwt.version>
         <wxPay.version>0.0.3</wxPay.version>
     </properties>
